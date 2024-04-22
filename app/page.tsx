@@ -1,54 +1,27 @@
-"use client";
-import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from "@nextui-org/react";
+"use client"
 import { useTheme } from "next-themes";
+import { useState } from "react";
+import Particles from "./components/particles";
 
-export default function Home() {
-    const { theme, setTheme } = useTheme()
+export default function Home({ children }: { children: React.ReactNode; }) {
+    const { theme, setTheme } = useTheme();
     return (
-        <>
-            <div>
-                <button onClick={() => setTheme('light')}>Light Mode</button><br />
-                <button onClick={() => setTheme('dark')}>Dark Mode</button>
+        <div className="relative  dark:bg-background min-h-screen flex flex-col items-center justify-center overflow-hidden">
+            <Particles />
+            <button
+                className="absolute top-4 right-4 bg-transparent z-10"
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            >
+                {theme === "light" ? <i className="ri-moon-line text-xl"></i> : <i className="ri-sun-line text-xl"></i>}
+            </button>
+            <div className="z-10 flex flex-col items-center justify-center text-center relative">
+                <p className="text-2xl md:text-3xl lg:text-4xl font-bold xl:text-5xl">Welcome to Security.</p>
+                <a
+                    href="/dashboard"
+                    className="mt-6 bg-gradient-to-r text-white from-purple-500 to-purple-900  py-3 px-10 rounded-lg transition duration-300 ease-in-out inline-block">
+                    Get Started
+                </a>
             </div>
-            <div className="w-full h-full flex flex-col items-center">
-                <div className=" text-xl font-bold container h-72 -mt-10  flex flex-col items-center justify-center">
-                    <p>WELCOME TO APEX SHOPPING</p>
-                    <span>cool</span>
-                </div>
-                <div className=" bg-background  w-10/12 absolute top-64 text-xl font-bold container min-h-screen h-full flex  items-center justify-center">
-                    <div className="flex flex-col p-4 w-3/12 h-full">
-                        <Dropdown>
-                            <DropdownTrigger>
-                                <Button
-                                    variant="bordered"
-                                    className="capitalize"
-                                >
-                                    {/* {selectedValue} */}
-                                </Button>
-                            </DropdownTrigger>
-                            <DropdownMenu
-                                aria-label="Single selection example"
-                                variant="flat"
-                                disallowEmptySelection
-                                selectionMode="single"
-                            // selectedKeys={selectedKeys}
-                            // onSelectionChange={setSelectedKeys}
-                            >
-                                <DropdownItem key="category">Category</DropdownItem>
-                                <DropdownItem key="number">Electronics</DropdownItem>
-                                <DropdownItem key="date">Food</DropdownItem>
-                                <DropdownItem key="single_date">Home Appliances</DropdownItem>
-                                <DropdownItem key="iteration">Cloth</DropdownItem>
-                            </DropdownMenu>
-                        </Dropdown>
-                    </div>
-                    <div className="flex flex-col w-9/12 p-4  h-full">
-                        <main id="product" className="">
-                            {/* <Items/> */}
-                        </main>
-                    </div>
-                </div>
-            </div>
-        </>
+        </div>
     );
 }

@@ -5,10 +5,12 @@ import { ThemeProvider } from "next-themes";
 
 export function Providers({ children }: { children: React.ReactNode }) {
     // defaultTheme="system"  enableSystem themes={['light', 'dark']}
-    return <ThemeProvider attribute="class" defaultTheme="purple-dark" >
+    return <ThemeProvider attribute="class" defaultTheme="dark" >
         <SessionProvider>
             <NextUIProvider>
-                {children}
+                <main className="dark:purple-dark light:purple-light">
+                    {children}
+                </main>
             </NextUIProvider>
         </SessionProvider>
     </ThemeProvider>

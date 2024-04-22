@@ -12,9 +12,10 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials, req) {
                 const res = await axios.post("/auth/sign-in", {}, {
                     auth: {
-                        username: credentials?.username,
-                        password: credentials?.password
+                        username: credentials?.username as string,
+                        password: credentials?.password as string
                     }
+                    
                 });
                 const user = res.data;
                 // If no error and we have user data, return it
@@ -33,13 +34,13 @@ export const authOptions: NextAuthOptions = {
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        // async jwt({ token, user }) {
-        //     if (user) token.role = user.role
-        //     return { ...token, ...user };
-        // },
-        // async session({ session, token }) {
-        //     if (session.user) session.user = token as any;
-        //     return session
-        // }
+        async jwt({ token, user }) {
+            if (user) token.role = user.role
+            return { ...token, ...user };
+        },
+        async session({ session, token }) {
+            if (session.user) session.user = token as any;
+            return session
+        }
     },
 }
